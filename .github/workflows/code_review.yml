@@ -24,10 +24,14 @@ jobs:
           pip install black flake8
 
       # 4. Run Black in --check mode (fails if code isn't formatted correctly)
-      - name: Check formatting with Black
+      - name: Check diff with Black
         run: black --diff .
 
-      # 5. Run Flake8 to check for PEP 8 errors
+      # 5. Run Black in --check mode (fails if code isn't formatted correctly)
+      - name: Check formatting with Black
+        run: black --check .
+
+      # 6. Run Flake8 to check for PEP 8 errors
       - name: Check PEP 8 compliance with Flake8
         run: |
           # stop the build if there are Python syntax errors or undefined names
