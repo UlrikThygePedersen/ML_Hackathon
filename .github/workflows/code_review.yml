@@ -1,11 +1,10 @@
-name: Python Auto-Format
+name: Python Auto-Format & Summary
 
 on: [push]
 
 jobs:
   auto-format:
     runs-on: ubuntu-latest
-    # Give the action permission to write/commit changes back to your repository
     permissions:
       contents: write
 
@@ -18,14 +17,29 @@ jobs:
         with:
           python-version: '3.11'
 
-      - name: Install Black
-        run: pip install black
+      # We add flake8-markdown to format our PEP8 report nicely
+      - name: Install Tools
+        run: |
+          pip install black flake8 flake8-markdown
 
-      # This time we run black WITHOUT "--check", so it actually modifies the files
+      # 1. Run Flake8 FIRST to log style issues before Black fixes them
+      - name: Check PEP 8 Style
+        run: |
+          echo "## 📊 PEP 8 Style Report" >> $GITHUB_STEP_SUMMARY
+          echo "```markdown" >> $GITHUB_STEP_SUMMARY
+          flake8 . --max-line-length=127 --exit-zero | flake8-markdown >> $GITHUB_STEP_SUMMARY
+          echo "```" >> $GITHUB_STEP_SUMMARY
+
+      # 2. Run Black and capture its output text
       - name: Format code with Black
-        run: black .
+        id: black_run
+        run: |
+          echo "## 🎨 Black Formatting Summary" >> $GITHUB_STEP_SUMMARY
+          echo "```text" >> $GITHUB_STEP_SUMMARY
+          black . >> $GITHUB_STEP_SUMMARY 2>&1
+          echo "```" >> $GITHUB_STEP_SUMMARY
 
-      # Automatically commit and push changes if Black modified any files
+      # 3. Commit the changes back to the repo if anything changed
       - name: Commit changes
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
