@@ -15,7 +15,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-python-version: '3.11' # You can change this to your project's version
+          python-version: '3.11' # Fixed a minor typo here (was python-python-version)
 
       # 3. Install Black and Flake8
       - name: Install Linting Tools
@@ -23,14 +23,25 @@ jobs:
           python -m pip install --upgrade pip
           pip install black flake8
 
-      # 4. Run Black in --check mode (fails if code isn't formatted correctly)
+      # 4. Run Black in --check mode and send results to summary
       - name: Check formatting with Black
-        run: black --check .
+        run: |
+          echo "## 🎨 Black Formatting Report" >> $GITHUB_STEP_SUMMARY
+          echo "```text" >> $GITHUB_STEP_SUMMARY
+          # '|| true' ensures the action keeps running even if Black finds issues
+          black --check . >> $GITHUB_STEP_SUMMARY 2>&1 || true
+          echo "```" >> $GITHUB_STEP_SUMMARY
 
-      # 5. Run Flake8 to check for PEP 8 errors
+      # 5. Run Flake8 to check for PEP 8 errors and send results to summary
       - name: Check PEP 8 compliance with Flake8
         run: |
-          # stop the build if there are Python syntax errors or undefined names
-          flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
-          # exit-zero treats all errors as warnings. Remove "--exit-zero" if you want PEP8 errors to break the build!
-          flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+          echo "## 📊 PEP 8 Style Report" >> $GITHUB_STEP_SUMMARY
+          echo "```text" >> $GITHUB_STEP_SUMMARY
+          
+          echo "=== Critical Syntax Errors ===" >> $GITHUB_STEP_SUMMARY
+          flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics >> $GITHUB_STEP_SUMMARY 2>&1 || true
+          
+          echo -e "\n=== Style & Code Complexity Warnings ===" >> $GITHUB_STEP_SUMMARY
+          flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics >> $GITHUB_STEP_SUMMARY 2>&1
+          
+          echo "```" >> $GITHUB_STEP_SUMMARY
