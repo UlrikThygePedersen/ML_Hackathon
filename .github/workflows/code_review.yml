@@ -19,15 +19,17 @@ jobs:
 
       - name: Install Tools
         run: |
-          pip install black flake8 flake8-markdown
+          pip install black flake8
 
-      # This safely injects the header and pipes the flake8 output into the summary
+      # We run flake8 and append its raw output directly into a code block
       - name: Check PEP 8 Style
         run: |
           echo "## 📊 PEP 8 Style Report" >> $GITHUB_STEP_SUMMARY
-          flake8 . --max-line-length=127 --exit-zero | flake8-markdown >> $GITHUB_STEP_SUMMARY
+          echo "```text" >> $GITHUB_STEP_SUMMARY
+          flake8 . --max-line-length=127 --exit-zero >> $GITHUB_STEP_SUMMARY 2>&1
+          echo "```" >> $GITHUB_STEP_SUMMARY
 
-      # This runs black, saves its text output, and puts it inside a code block cleanly
+      # We run black and append its raw output into a code block
       - name: Format code with Black
         run: |
           echo "## 🎨 Black Formatting Summary" >> $GITHUB_STEP_SUMMARY
