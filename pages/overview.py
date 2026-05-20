@@ -1,11 +1,4 @@
-import base64
-import os
 import streamlit as st
-
-
-def _img_to_b64(path: str) -> str:
-    with open(path, "rb") as f:
-        return base64.b64encode(f.read()).decode()
 
 st.markdown(
     """
@@ -53,13 +46,13 @@ CONTRIBUTORS = [
     {
         "handle": "ULPN",
         "name": "Ulrike Thyge Pedersen",
-        "img": "assets/ULPN.png",
+
         "github": "https://github.com/UlrikThygePedersen",
     },
     {
         "handle": "JBXT",
         "name": "Jan Bendix Portius",
-        "img": "assets/JBXT.png",
+
         "github": "https://github.com/Bartimaeus25",
     },
 ]
@@ -77,25 +70,7 @@ st.markdown(
         border-radius: 12px;
         background: #2a2a2a;
     }
-    .contributor-card img {
-        width: 80px;
-        height: 80px;
-        border-radius: 50%;
-        object-fit: cover;
-        flex-shrink: 0;
-        border: 2px solid #555;
-    }
-    .contributor-placeholder {
-        width: 80px;
-        height: 80px;
-        border-radius: 50%;
-        background: #555;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 2rem;
-        flex-shrink: 0;
-    }
+
     .contributor-info .handle {
         font-weight: 700;
         font-size: 1.05rem;
@@ -121,7 +96,6 @@ st.markdown(
 
 CARD_TEMPLATE = """
 <div class="contributor-card">
-    {img_tag}
     <div class="contributor-info">
         <p class="handle">{handle}</p>
         <p class="fullname">{name}</p>
@@ -132,14 +106,7 @@ CARD_TEMPLATE = """
 
 cols = st.columns(len(CONTRIBUTORS), gap="medium")
 for col, c in zip(cols, CONTRIBUTORS):
-    img_path = c["img"]
-    if os.path.exists(img_path):
-        b64 = _img_to_b64(img_path)
-        img_tag = "<img src='data:image/png;base64," + b64 + "' />"
-    else:
-        img_tag = "<div class='contributor-placeholder'>👤</div>"
     html = CARD_TEMPLATE.format(
-        img_tag=img_tag,
         handle=c["handle"],
         name=c["name"],
         github=c["github"],
