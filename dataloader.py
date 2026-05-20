@@ -8,13 +8,13 @@ file_path = "players.csv"
 
 # Load the latest version
 df = kagglehub.load_dataset(
-  KaggleDatasetAdapter.PANDAS,
-  "davidcariboo/player-scores",
-  file_path,
-  # Provide any additional arguments like 
-  # sql_query or pandas_kwargs. See the 
-  # documenation for more information:
-  # https://github.com/Kaggle/kagglehub/blob/main/README.md#kaggledatasetadapterpandas
+    KaggleDatasetAdapter.PANDAS,
+    "davidcariboo/player-scores",
+    file_path,
+    # Provide any additional arguments like
+    # sql_query or pandas_kwargs. See the
+    # documenation for more information:
+    # https://github.com/Kaggle/kagglehub/blob/main/README.md#kaggledatasetadapterpandas
 )
 
 print("First 5 records:", df.head())

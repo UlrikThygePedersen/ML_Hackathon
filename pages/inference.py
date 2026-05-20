@@ -27,7 +27,9 @@ if st.button("Predict", type="primary"):
     if hasattr(run["clf"], "predict_proba"):
         proba = run["clf"].predict_proba(input_df)[0]
         classes = run["clf"].classes_
-        proba_df = pd.DataFrame({"class": classes, "probability": proba}).set_index("class")
+        proba_df = pd.DataFrame({"class": classes, "probability": proba}).set_index(
+            "class"
+        )
         st.bar_chart(proba_df, height=250)
 
 st.divider()

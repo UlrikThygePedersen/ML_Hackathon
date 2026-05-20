@@ -17,7 +17,9 @@ if df is None:
 if "df_clean" in st.session_state:
     st.success("Using cleaned dataset from the Data Cleaning page.")
 else:
-    st.warning("No cleaned dataset found — using raw data. Consider running Data Cleaning first.")
+    st.warning(
+        "No cleaned dataset found — using raw data. Consider running Data Cleaning first."
+    )
 
 st.subheader("Feature selection")
 all_cols = df.columns.tolist()
