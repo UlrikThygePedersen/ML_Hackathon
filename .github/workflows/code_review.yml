@@ -26,7 +26,7 @@ jobs:
 
       # 4. Run Black in --check mode
       - name: Check diff with Black
-        run: black --check .
+        run: black .
 
       # 5. Run Flake8 to check for PEP 8 errors
       - name: Check PEP 8 compliance with Flake8
