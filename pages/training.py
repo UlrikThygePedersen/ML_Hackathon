@@ -246,6 +246,8 @@ if st.button("Train model", type="primary"):
             "mae_eur": round(mae_eur, 0),
         },
         "clf": model,
+        "val_actual": y_test_orig.values.tolist(),
+        "val_predicted": y_pred_orig.tolist() if hasattr(y_pred_orig, "tolist") else list(y_pred_orig),
     }
     st.session_state.setdefault("runs", []).append(run)
     st.session_state["latest_run"] = run
