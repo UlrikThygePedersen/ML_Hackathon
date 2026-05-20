@@ -8,11 +8,16 @@ import datetime
 
 st.title("ML Training")
 
-df = st.session_state.get("df")
+df = st.session_state.get("df_clean") or st.session_state.get("df")
 
 if df is None:
-    st.warning("No dataset loaded. Upload a CSV on the EDA page first.")
+    st.warning("No dataset loaded. Load data on the EDA page first.")
     st.stop()
+
+if "df_clean" in st.session_state:
+    st.success("Using cleaned dataset from the Data Cleaning page.")
+else:
+    st.warning("No cleaned dataset found — using raw data. Consider running Data Cleaning first.")
 
 st.subheader("Feature selection")
 all_cols = df.columns.tolist()
