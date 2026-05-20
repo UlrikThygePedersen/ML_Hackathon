@@ -138,7 +138,7 @@ fig = px.bar(
     height=350,
 )
 fig.update_layout(coloraxis_showscale=False, margin=dict(l=0, r=0, t=10, b=0))
-st.plotly_chart(fig, use_container_width=True)
+st.plotly_chart(fig, width="stretch")
 
 # 1b. Player count by position
 st.subheader("Player count by position")
@@ -153,7 +153,7 @@ fig = px.bar(
     height=300,
 )
 fig.update_layout(showlegend=False, margin=dict(l=0, r=0, t=10, b=0))
-st.plotly_chart(fig, use_container_width=True)
+st.plotly_chart(fig, width="stretch")
 
 st.divider()
 
@@ -176,7 +176,7 @@ with col1:
         height=350,
     )
     fig.update_layout(margin=dict(l=0, r=0, t=10, b=0))
-    st.plotly_chart(fig, use_container_width=True)
+    st.plotly_chart(fig, width="stretch")
 
 # 2b. Current vs highest value
 with col2:
@@ -212,7 +212,7 @@ with col2:
         )
     )
     fig.update_layout(margin=dict(l=0, r=0, t=10, b=0))
-    st.plotly_chart(fig, use_container_width=True)
+    st.plotly_chart(fig, width="stretch")
 
 st.divider()
 
@@ -236,7 +236,7 @@ fig = px.scatter(
     height=400,
 )
 fig.update_layout(margin=dict(l=0, r=0, t=10, b=0))
-st.plotly_chart(fig, use_container_width=True)
+st.plotly_chart(fig, width="stretch")
 
 col1, col2 = st.columns(2)
 
@@ -254,7 +254,7 @@ with col1:
         height=380,
     )
     fig.update_layout(showlegend=False, margin=dict(l=0, r=0, t=10, b=0))
-    st.plotly_chart(fig, use_container_width=True)
+    st.plotly_chart(fig, width="stretch")
 
 # 3c. Foot preference vs market value
 with col2:
@@ -276,7 +276,7 @@ with col2:
         height=380,
     )
     fig.update_layout(showlegend=False, margin=dict(l=0, r=0, t=10, b=0))
-    st.plotly_chart(fig, use_container_width=True)
+    st.plotly_chart(fig, width="stretch")
 
 col1, col2 = st.columns(2)
 
@@ -304,7 +304,7 @@ with col1:
         height=420,
     )
     fig.update_layout(margin=dict(l=0, r=0, t=10, b=0))
-    st.plotly_chart(fig, use_container_width=True)
+    st.plotly_chart(fig, width="stretch")
 
 # 3e. Nationality vs average market value (top 20)
 with col2:
@@ -330,7 +330,7 @@ with col2:
         height=420,
     )
     fig.update_layout(margin=dict(l=0, r=0, t=10, b=0))
-    st.plotly_chart(fig, use_container_width=True)
+    st.plotly_chart(fig, width="stretch")
 
 col1, col2 = st.columns(2)
 
@@ -353,7 +353,7 @@ with col1:
         height=380,
     )
     fig.update_layout(margin=dict(l=0, r=0, t=10, b=0))
-    st.plotly_chart(fig, use_container_width=True)
+    st.plotly_chart(fig, width="stretch")
 
 # 3g. International caps vs market value
 with col2:
@@ -375,4 +375,4 @@ with col2:
         height=380,
     )
     fig.update_layout(margin=dict(l=0, r=0, t=10, b=0))
-    st.plotly_chart(fig, use_container_width=True)
+    st.plotly_chart(fig, width="stretch")

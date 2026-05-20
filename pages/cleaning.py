@@ -190,7 +190,7 @@ if df_clean is not None:
         height=max(250, len(compare) * 35),
     )
     fig.update_layout(margin=dict(l=0, r=0, t=10, b=0))
-    st.plotly_chart(fig, use_container_width=True)
+    st.plotly_chart(fig, width="stretch")
 
     st.subheader("Cleaned data preview")
-    st.dataframe(df_clean.head(50), use_container_width=True)
+    st.dataframe(df_clean.head(50), width="stretch")

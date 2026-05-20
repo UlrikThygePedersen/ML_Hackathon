@@ -23,7 +23,7 @@ records = [
 registry_df = pd.DataFrame(records)
 
 st.subheader("All runs")
-st.dataframe(registry_df, use_container_width=True)
+st.dataframe(registry_df, width="stretch")
 
 st.subheader("Accuracy over runs")
 st.line_chart(registry_df["accuracy"], height=250)

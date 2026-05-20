@@ -44,7 +44,7 @@ if uploaded:
         preds = run["clf"].predict(batch_df[run["feature_names"]])
         result_df = batch_df.copy()
         result_df["prediction"] = preds
-        st.dataframe(result_df, use_container_width=True)
+        st.dataframe(result_df, width="stretch")
         st.download_button(
             "Download predictions",
             result_df.to_csv(index=False),
