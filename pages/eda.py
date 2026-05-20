@@ -49,6 +49,45 @@ if raw is None:
 
 df = prepare(raw)
 
+# --- Sidebar filters ---
+with st.sidebar:
+    st.header("Filters")
+
+    positions = sorted(df["position"].dropna().unique().tolist())
+    sel_positions = st.multiselect("Position", positions, default=positions)
+
+    top_leagues = (
+        df["current_club_domestic_competition_id"]
+        .value_counts()
+        .head(30)
+        .index.tolist()
+    )
+    sel_leagues = st.multiselect("League", top_leagues, default=top_leagues)
+
+    age_min = int(df["age"].dropna().min())
+    age_max = int(df["age"].dropna().max())
+    sel_age = st.slider("Age range", age_min, age_max, (age_min, age_max))
+
+    feet = sorted(df["foot"].dropna().unique().tolist())
+    sel_foot = st.multiselect("Foot", feet, default=feet)
+
+    top_nations = (
+        df["country_of_citizenship"]
+        .value_counts()
+        .head(20)
+        .index.tolist()
+    )
+    sel_nations = st.multiselect("Nationality (top 20)", top_nations, default=top_nations)
+
+mask = (
+    df["position"].isin(sel_positions)
+    & (df["current_club_domestic_competition_id"].isin(sel_leagues) | df["current_club_domestic_competition_id"].isna())
+    & df["age"].between(sel_age[0], sel_age[1], inclusive="both")
+    & (df["foot"].isin(sel_foot) | df["foot"].isna())
+    & (df["country_of_citizenship"].isin(sel_nations) | df["country_of_citizenship"].isna())
+)
+df = df[mask]
+
 st.caption(f"{len(df):,} players · {df.shape[1]} columns")
 st.divider()
 
